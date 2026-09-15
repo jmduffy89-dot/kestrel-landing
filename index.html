@@ -87,51 +87,19 @@
   .hero{ padding:190px 0 100px; position:relative; }
   .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:64px; align-items:center; }
   @media (max-width:900px){
-    /* --- layout --- */
+    /* --- layout that must win over the base .hero-grid rule above,
+       which is defined earlier in the file — safe at equal specificity
+       regardless of source order for the rules below, all of which
+       target selectors whose base declaration comes later in this
+       stylesheet (this block was originally placed up here, before
+       those base rules, so it silently lost every one of those ties —
+       moved down after all of them; see the mobile hero-graphic
+       spacing fix). --- */
     .hero-grid{grid-template-columns:1fr;}
-    .hover-stage{max-width:280px; margin:12px auto 0;}
     .hero{padding:132px 0 52px;}
-    section{padding:52px 0;}
-    .section-head{margin-bottom:30px;}
     header{padding:14px 0;}
     .brand{ font-size:18px; }
     .brand svg{ width:22px; height:22px; }
-
-    /* --- typography rhythm --- */
-    h1.headline{ font-size:32px; line-height:1.22; }
-    .hero-sub{ font-size:16px; margin-top:16px; }
-    .section-head h2{ font-size:24px; }
-    .section-head p{ font-size:15px; }
-
-    /* --- hero CTAs: stacked, full-width, clear tap targets --- */
-    .hero-cta{ margin-top:24px; flex-direction:column; gap:10px; }
-    .hero-cta .btn{ width:100%; text-align:center; padding:14px 20px; }
-
-    /* --- split sections: consistent stacked gap --- */
-    .split{ gap:30px; }
-    .split h3{ font-size:18px; }
-    .split p{ font-size:15px; }
-    /* --- evidence card on mobile --- */
-    .evidence-card{ padding:20px 22px; font-size:13px; }
-
-    /* --- comparison cards --- */
-    .compare{ gap:12px; }
-    .compare-col{ padding:22px; }
-    .compare-col h4{ margin-bottom:16px; }
-    .compare-col li{ font-size:14px; }
-
-    /* --- noise list card --- */
-    .noise-list li{ padding:12px 14px; font-size:13px; }
-
-    /* --- CTA section --- */
-    .cta-section{ padding:70px 0; }
-    .cta-section h2{ font-size:26px; }
-    .cta-section p{ font-size:15px; }
-    .cta-section .btn{ width:100%; }
-
-    /* --- footer --- */
-    footer{ padding:28px 0; }
-    footer .wrap{ flex-direction:column; align-items:flex-start; gap:10px; }
   }
 
   @media (max-width:420px){
@@ -254,6 +222,56 @@
   footer{ padding:36px 0; border-top:1px solid var(--border); }
   footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
   .fine{ font-size:12.5px; color:var(--text-faint); }
+
+  /* Moved down here from right after the base .hero-grid rule — every
+     selector below has its OWN base (desktop) declaration further up
+     the file but still after where this block used to live, so at
+     equal specificity the base rule was winning the cascade tie and
+     silently no-op'ing these mobile overrides on every screen size,
+     including the .hover-stage sizing that was the actual reported
+     symptom (a much bigger box than the 280px intended, with no real
+     top margin, hence the oversized gap around the bird on mobile). */
+  @media (max-width:900px){
+    section{padding:52px 0;}
+    .section-head{margin-bottom:30px;}
+    .hover-stage{max-width:280px; margin:12px auto 0;}
+
+    /* --- typography rhythm --- */
+    h1.headline{ font-size:32px; line-height:1.22; }
+    .hero-sub{ font-size:16px; margin-top:16px; }
+    .section-head h2{ font-size:24px; }
+    .section-head p{ font-size:15px; }
+
+    /* --- hero CTAs: stacked, full-width, clear tap targets --- */
+    .hero-cta{ margin-top:24px; flex-direction:column; gap:10px; }
+    .hero-cta .btn{ width:100%; text-align:center; padding:14px 20px; }
+
+    /* --- split sections: consistent stacked gap --- */
+    .split{ gap:30px; }
+    .split h3{ font-size:18px; }
+    .split p{ font-size:15px; }
+    /* --- evidence card on mobile --- */
+    .evidence-card{ padding:20px 22px; font-size:13px; }
+
+    /* --- comparison cards --- */
+    .compare{ gap:12px; }
+    .compare-col{ padding:22px; }
+    .compare-col h4{ margin-bottom:16px; }
+    .compare-col li{ font-size:14px; }
+
+    /* --- noise list card --- */
+    .noise-list li{ padding:12px 14px; font-size:13px; }
+
+    /* --- CTA section --- */
+    .cta-section{ padding:70px 0; }
+    .cta-section h2{ font-size:26px; }
+    .cta-section p{ font-size:15px; }
+    .cta-section .btn{ width:100%; }
+
+    /* --- footer --- */
+    footer{ padding:28px 0; }
+    footer .wrap{ flex-direction:column; align-items:flex-start; gap:10px; }
+  }
 
   .reveal{ opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
