@@ -234,7 +234,15 @@
   @media (max-width:900px){
     section{padding:52px 0;}
     .section-head{margin-bottom:30px;}
-    .hover-stage{max-width:280px; margin:12px auto 0;}
+    /* The base rule forces a 1:1 square box, sized for the desktop
+       layout where it's a whole column next to the text and the extra
+       room around the (wide, short) bird acts as a "stage". Stacked on
+       mobile that same square leaves real dead space above and below
+       the bird even once its width is capped — measured at ~52px on
+       each side, on top of the gap above the box. Closer to the bird's
+       own proportions (viewBox 200x160, ~1.25:1) removes most of that
+       without losing the glow's breathing room entirely. */
+    .hover-stage{max-width:280px; margin:12px auto 0; aspect-ratio:4/3;}
 
     /* --- typography rhythm --- */
     h1.headline{ font-size:32px; line-height:1.22; }
