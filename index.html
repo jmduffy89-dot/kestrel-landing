@@ -229,6 +229,7 @@
   .cta-section{ text-align:center; padding:120px 0; }
   .cta-section h2{ font-size:clamp(28px,4vw,42px); max-width:600px; margin:0 auto 18px; }
   .cta-section p{ color:var(--text-muted); max-width:440px; margin:0 auto 32px; font-size:16.5px; }
+  .cta-buttons{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
   footer{ padding:36px 0; border-top:1px solid var(--border); }
   footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
@@ -286,6 +287,7 @@
     .cta-section h2{ font-size:26px; }
     .cta-section p{ font-size:15px; }
     .cta-section .btn{ width:100%; }
+    .cta-buttons{ flex-direction:column; gap:10px; }
 
     /* --- footer --- */
     footer{ padding:28px 0; }
@@ -338,6 +340,7 @@
       <p class="hero-sub">Kestrel reads every live public sector tender notice, judges which ones genuinely fit your business, and drafts a grounded first response the moment one does — citing your own evidence, not guessing.</p>
       <div class="hero-cta">
         <a href="#contact" class="btn btn-solid">Book a walkthrough</a>
+        <a href="https://demo.meetkestrel.co.uk" class="btn" target="_blank" rel="noopener">See the demo</a>
         <a href="#hover" class="btn">See how it works</a>
       </div>
     </div>
@@ -449,8 +452,11 @@
 <section class="cta-section" id="contact">
   <div class="wrap reveal">
     <h2>See what Kestrel would find for your business.</h2>
-    <p>A short walkthrough, built around a handful of your own live tenders — not a generic demo.</p>
-    <a href="mailto:hello@example.com" class="btn btn-solid" style="padding:14px 28px; font-size:15px;">Book a walkthrough</a>
+    <p>See a generic example live, or book a walkthrough built around your own real tenders.</p>
+    <div class="cta-buttons">
+      <a href="mailto:hello@example.com" class="btn btn-solid" style="padding:14px 28px; font-size:15px;">Book a walkthrough</a>
+      <a href="https://demo.meetkestrel.co.uk" class="btn" style="padding:14px 28px; font-size:15px;" target="_blank" rel="noopener">See the demo</a>
+    </div>
   </div>
 </section>
 
