@@ -226,6 +226,35 @@
   .compare-col.kestrel li{ color:var(--text); font-weight:500; }
   .compare-col.kestrel li::before{ content:'✓'; color:var(--accent); }
 
+  /* Standalone callout between discovery and drafting. Same card language
+     as .compare-col.kestrel (accent border + soft indigo glow); the
+     statement itself is the large element, with the key phrase on the page's
+     indigo→violet→teal accent gradient. */
+  .stat-section{ padding:72px 0 0; }
+  .stat-callout{
+    padding:52px 56px; background:var(--surface); border:1px solid var(--accent); border-radius:var(--radius);
+    box-shadow:0 0 0 1px var(--accent), 0 24px 64px rgba(99,102,241,0.16);
+    position:relative; overflow:hidden;
+  }
+  .stat-callout::before{
+    content:''; position:absolute; left:-10%; top:-40%; width:60%; height:180%;
+    background:radial-gradient(closest-side, rgba(99,102,241,0.18), transparent 70%); pointer-events:none;
+  }
+  .stat-callout > *{ position:relative; }
+  .stat-label{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2dd4bf; margin-bottom:18px; }
+  .stat-headline{ font-size:clamp(30px,4.2vw,50px); line-height:1.12; letter-spacing:-0.02em; max-width:19ch; margin-bottom:20px; }
+  .stat-headline .grad{
+    background:linear-gradient(135deg,#818cf8 0%,#a855f7 55%,#2dd4bf 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+  }
+  .stat-callout p{ color:var(--text-muted); font-size:17px; max-width:56ch; }
+  @media (max-width:800px){
+    .stat-section{ padding:40px 0 0; }
+    .stat-callout{ padding:30px 26px; }
+    .stat-headline{ font-size:30px; max-width:none; margin-bottom:16px; }
+    .stat-callout p{ font-size:15px; }
+  }
+
   /* "Why not just use ChatGPT?" — reuses .compare-col's card treatment
      (surface, border, hover lift + gradient edge) so it reads as part of
      the same family as the "Why bespoke" comparison above it. The numeral
@@ -409,6 +438,16 @@
   </div>
 </section>
 
+<section class="stat-section">
+  <div class="wrap">
+    <div class="stat-callout reveal">
+      <div class="stat-label">Completeness</div>
+      <h3 class="stat-headline">Find a Tender's own list can <span class="grad">silently drop notices.</span></h3>
+      <p>Kestrel doesn't take that list on trust. It cross-checks open tenders against Find a Tender's own per-notice records, and pulls in what the list left out.</p>
+    </div>
+  </div>
+</section>
+
 <section id="strike">
   <div class="wrap">
     <div class="section-head reveal">
@@ -480,7 +519,7 @@
         <div class="why-num">01</div>
         <h3>Scored against the real weighting, not a general impression.</h3>
         <p>Kestrel pulls the buyer's actual evaluation sub-criteria and stated weighting out of their own document into structured data, then critiques every draft against each specific criterion — and revises it — before you ever see it.</p>
-        <p>Doing that by hand means transcribing a scoring table from a 50-page document every time, with nothing to tell you if you got it wrong.</p>
+        <p>Because that same structured breakdown drives both the drafted response and its score, the two can't quietly drift apart. Doing this by hand means keeping two separate things in your head — what you're writing, and what you're being judged on — with nothing forcing them to stay aligned.</p>
       </div>
       <div class="compare-col why-card teal">
         <div class="why-num">02</div>
