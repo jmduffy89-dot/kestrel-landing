@@ -257,13 +257,40 @@
      with an actual ✗/✓ pair and the page's existing warning/verified
      tones (amber from .evidence-placeholder's "flagged" state, teal from
      .cite-tag/.evidence-count) rather than a plain accent dash. */
-  .chat-compare{ list-style:none; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:9px; }
-  .chat-compare li{ font-size:14px; line-height:1.5; color:var(--text-muted); }
-  .chat-compare li strong{ color:var(--text); font-weight:600; }
-  .chat-compare .mark{ display:inline-block; width:1.1em; font-weight:700; }
-  .chat-compare li.no .mark{ color:#f59e0b; }
-  .chat-compare li.yes .mark{ color:#2dd4bf; }
-  @media (max-width:800px){ .chat-compare{ margin-top:18px; padding-top:16px; } .chat-compare li{ font-size:13.5px; } }
+  /* Section 1's comparison visual: a small Day 1 -> Day 2 timeline, not a
+     restated bullet list. A continuous left rail (border-left on each row,
+     margin-aligned so rows chain into one line) with a dot per row —
+     neutral for the shared Day 1 moment, amber/teal for the Day 2 split —
+     reusing the same warning/verified tones as elsewhere on the page. */
+  .scenario-timeline{ margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+  .scenario-row{ display:flex; gap:14px; border-left:2px solid var(--border-strong); margin-left:5px; padding:0 0 18px 16px; }
+  .scenario-row:last-child{ padding-bottom:0; border-left-color:transparent; }
+  .scenario-row .dot{ flex:0 0 9px; width:9px; height:9px; border-radius:50%; background:var(--text-faint); margin:5px 0 0 -21px; box-shadow:0 0 0 3px var(--surface); }
+  .scenario-row.no .dot{ background:#f59e0b; }
+  .scenario-row.yes .dot{ background:#2dd4bf; }
+  .scenario-label{ font-family:'Space Grotesk',sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-faint); margin-bottom:4px; }
+  .scenario-row.no .scenario-label{ color:#f59e0b; }
+  .scenario-row.yes .scenario-label{ color:#2dd4bf; }
+  .scenario-text{ font-size:14.5px; color:var(--text-muted); line-height:1.5; }
+  .scenario-text .mark{ font-weight:700; margin-right:3px; }
+  .scenario-row.no .scenario-text .mark{ color:#f59e0b; }
+  .scenario-row.yes .scenario-text .mark{ color:#2dd4bf; }
+
+  /* Section 2's comparison visual: two short scenario panels side by side,
+     not bullets restating the prose above. */
+  .scenario-split{ margin-top:24px; padding-top:20px; border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .scenario-panel{ background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
+  .scenario-panel.no{ border-color:rgba(245,158,11,0.35); }
+  .scenario-panel.yes{ border-color:rgba(45,212,191,0.35); }
+  .scenario-panel-label{ font-family:'Space Grotesk',sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px; }
+  .scenario-panel.no .scenario-panel-label{ color:#f59e0b; }
+  .scenario-panel.yes .scenario-panel-label{ color:#2dd4bf; }
+  .scenario-panel p{ font-size:14px; color:var(--text-muted); line-height:1.5; margin:0; }
+  @media (max-width:800px){
+    .scenario-timeline, .scenario-split{ margin-top:18px; padding-top:16px; }
+    .scenario-text{ font-size:14px; }
+    .scenario-split{ grid-template-columns:1fr; gap:10px; }
+  }
   @media (max-width:800px){
     .stat-section{ padding:40px 0 0; }
     .stat-callout{ padding:30px 26px; }
@@ -509,27 +536,46 @@
   <div class="wrap">
     <div class="stat-callout reveal statement-block">
       <div class="stat-label">Data source</div>
-      <h3 class="stat-headline">We don't search Find a Tender. <span class="grad">We read its real data feed.</span></h3>
-      <p>Find a Tender's own website search isn't the full picture — notices get quietly updated after they're first published, and a search box doesn't reliably resurface an amended listing. Any tool that types into that search box, including a chat browsing the site live, sees only what that search currently returns.</p>
-      <p>Kestrel doesn't use that search box at all. We connect directly to Find a Tender's official structured data feed — the government's own machine-readable export of every release, built for exactly this purpose — and cross-check it daily against every notice we've ever stored, specifically to catch ones that quietly changed. No chat tool has that standing record to check against; every session starts blind.</p>
-      <ul class="chat-compare">
-        <li class="no"><span class="mark">✗</span> <strong>Raw chat tool</strong> — reads whatever the public search returns, including its gaps</li>
-        <li class="yes"><span class="mark">✓</span> <strong>Kestrel</strong> — reads the direct government data feed, checked daily against history</li>
-        <li class="no"><span class="mark">✗</span> <strong>Raw chat tool</strong> — no memory of what existed yesterday</li>
-        <li class="yes"><span class="mark">✓</span> <strong>Kestrel</strong> — catches notices that quietly disappeared from view</li>
-      </ul>
+      <h3 class="stat-headline tight">Every chat session <span class="grad">starts blind.</span></h3>
+      <p>A chat tool searching Find a Tender right now only sees what's there right now — it has no memory of what existed yesterday, so it can't notice when something quietly changes or disappears. Kestrel checks the government's real data feed daily against everything we've ever seen, specifically to catch what's changed.</p>
+      <div class="scenario-timeline">
+        <div class="scenario-row">
+          <span class="dot"></span>
+          <div>
+            <div class="scenario-label">Day 1</div>
+            <div class="scenario-text">Both see the same live notice.</div>
+          </div>
+        </div>
+        <div class="scenario-row no">
+          <span class="dot"></span>
+          <div>
+            <div class="scenario-label">Day 2 — Raw chat</div>
+            <div class="scenario-text"><span class="mark">✗</span> No memory it existed. Silently misses the change.</div>
+          </div>
+        </div>
+        <div class="scenario-row yes">
+          <span class="dot"></span>
+          <div>
+            <div class="scenario-label">Day 2 — Kestrel</div>
+            <div class="scenario-text"><span class="mark">✓</span> Catches it in the next daily check — the notice updates, nothing missed.</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="stat-callout reveal statement-block">
       <div class="stat-label">Methodology</div>
-      <h3 class="stat-headline">Built on a real bid-writing methodology <span class="grad">— fused automatically with your evidence and this tender's exact rules.</span></h3>
-      <p>Our drafting process is based on a genuine UK highways bid-writing methodology — extraction, buyer research, evidence-based drafting, self-scoring, compliance review — tested against real tender documents, not a generic "write me a proposal" prompt.</p>
-      <p>But a methodology alone can be copy-pasted into any chat. What can't be replicated is what it's fused with, automatically, every time: the exact word limit and evaluation weighting extracted from this specific tender document, and your company's own confirmed facts, remembered permanently from every past bid. In a raw chat, you'd have to manually re-paste your entire methodology, your company's evidence, and this tender's specific rules correctly, every single question, every single time — with real risk of missing something. Ours never forgets, and never has to be told twice.</p>
-      <ul class="chat-compare">
-        <li class="no"><span class="mark">✗</span> <strong>Raw chat tool</strong> — you re-paste your methodology and company facts every session</li>
-        <li class="yes"><span class="mark">✓</span> <strong>Kestrel</strong> — company facts remembered permanently, applied automatically</li>
-        <li class="no"><span class="mark">✗</span> <strong>Raw chat tool</strong> — no reliable check against this tender's actual word limit/weighting</li>
-        <li class="yes"><span class="mark">✓</span> <strong>Kestrel</strong> — extracts the real limit and weighting from the document itself</li>
-      </ul>
+      <h3 class="stat-headline tight">Chat memory is a loose note. <span class="grad">Ours is a structured record.</span></h3>
+      <p>A chat tool's memory only stores what you happen to tell it, when you think to mention it — there's no way to point it at a 50-page tender document and have it reliably extract and remember the exact word limit or evaluation weighting on its own. Kestrel builds a real, structured record automatically — every confirmed fact timestamped and sourced, and every tender's actual rules extracted directly from the document itself.</p>
+      <div class="scenario-split">
+        <div class="scenario-panel no">
+          <div class="scenario-panel-label">Raw chat</div>
+          <p>You mention your accreditation once, maybe. This tender's word limit? Never extracted — you'd have to read and enter it yourself.</p>
+        </div>
+        <div class="scenario-panel yes">
+          <div class="scenario-panel-label">Kestrel</div>
+          <p>Every accreditation, every past project fact — stored, timestamped, sourced. This tender's word limit and weighting — pulled automatically from the document.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
