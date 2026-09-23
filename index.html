@@ -242,12 +242,15 @@
   }
   .stat-callout > *{ position:relative; }
   .stat-label{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2dd4bf; margin-bottom:18px; }
-  .stat-headline{ font-size:clamp(30px,4.2vw,50px); line-height:1.12; letter-spacing:-0.02em; max-width:19ch; margin-bottom:20px; }
+  .stat-headline{ font-size:clamp(28px,3.6vw,42px); line-height:1.18; letter-spacing:-0.02em; max-width:38ch; margin-bottom:22px; }
+  .stat-headline.tight{ font-size:clamp(30px,4.2vw,50px); line-height:1.12; max-width:19ch; }
   .stat-headline .grad{
     background:linear-gradient(135deg,#818cf8 0%,#a855f7 55%,#2dd4bf 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
   }
-  .stat-callout p{ color:var(--text-muted); font-size:17px; max-width:56ch; }
+  .stat-callout p{ color:var(--text-muted); font-size:17px; max-width:62ch; }
+  .stat-callout p + p{ margin-top:14px; }
+  .statement-block + .statement-block{ margin-top:20px; }
   @media (max-width:800px){
     .stat-section{ padding:40px 0 0; }
     .stat-callout{ padding:30px 26px; }
@@ -255,19 +258,6 @@
     .stat-callout p{ font-size:15px; }
   }
 
-  /* "Why not just use ChatGPT?" — reuses .compare-col's card treatment
-     (surface, border, hover lift + gradient edge) so it reads as part of
-     the same family as the "Why bespoke" comparison above it. The numeral
-     eyebrow cycles the page's existing indigo/teal/violet accents. */
-  .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  @media (max-width:1000px){ .why-grid{grid-template-columns:1fr;} }
-  .why-card{ padding:30px 32px; }
-  .why-num{ font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.1em; color:var(--accent); margin-bottom:14px; }
-  .why-card.teal .why-num{ color:#2dd4bf; }
-  .why-card.violet .why-num{ color:#a855f7; }
-  .why-card h3{ font-size:20px; line-height:1.3; margin-bottom:12px; }
-  .why-card p{ font-size:15px; color:var(--text-muted); }
-  .why-card p + p{ margin-top:12px; }
 
   .cta-section{ text-align:center; padding:120px 0; }
   .cta-section h2{ font-size:clamp(28px,4vw,42px); max-width:600px; margin:0 auto 18px; }
@@ -324,12 +314,6 @@
 
     /* --- noise list card --- */
     .noise-list li{ padding:12px 14px; font-size:13px; }
-
-    /* --- why-not-ChatGPT cards --- */
-    .why-grid{ gap:12px; }
-    .why-card{ padding:22px; }
-    .why-card h3{ font-size:18px; }
-    .why-card p{ font-size:14px; }
 
     /* --- CTA section --- */
     .cta-section{ padding:70px 0; }
@@ -442,7 +426,7 @@
   <div class="wrap">
     <div class="stat-callout reveal">
       <div class="stat-label">Completeness</div>
-      <h3 class="stat-headline">Find a Tender's own list can <span class="grad">silently drop notices.</span></h3>
+      <h3 class="stat-headline tight">Find a Tender's own list can <span class="grad">silently drop notices.</span></h3>
       <p>Kestrel doesn't take that list on trust. It cross-checks open tenders against Find a Tender's own per-notice records, and pulls in what the list left out.</p>
     </div>
   </div>
@@ -510,29 +494,17 @@
 
 <section id="why-not-chatgpt">
   <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Why not just use ChatGPT?</h2>
-      <p>Fair question. Here's what a chat window genuinely can't do.</p>
+    <div class="stat-callout reveal statement-block">
+      <div class="stat-label">Data source</div>
+      <h3 class="stat-headline">We don't search Find a Tender. <span class="grad">We read its real data feed.</span></h3>
+      <p>Find a Tender's own website search isn't the full picture — notices get quietly updated after they're first published, and a search box doesn't reliably resurface an amended listing. Any tool that types into that search box, including a chat browsing the site live, sees only what that search currently returns.</p>
+      <p>Kestrel doesn't use that search box at all. We connect directly to Find a Tender's official structured data feed — the government's own machine-readable export of every release, built for exactly this purpose — and cross-check it daily against every notice we've ever stored, specifically to catch ones that quietly changed. No chat tool has that standing record to check against; every session starts blind.</p>
     </div>
-    <div class="why-grid reveal">
-      <div class="compare-col why-card">
-        <div class="why-num">01</div>
-        <h3>Scored against the real weighting, not a general impression.</h3>
-        <p>Kestrel pulls the buyer's actual evaluation sub-criteria and stated weighting out of their own document into structured data, then critiques every draft against each specific criterion — and revises it — before you ever see it.</p>
-        <p>Because that same structured breakdown drives both the drafted response and its score, the two can't quietly drift apart. Doing this by hand means keeping two separate things in your head — what you're writing, and what you're being judged on — with nothing forcing them to stay aligned.</p>
-      </div>
-      <div class="compare-col why-card teal">
-        <div class="why-num">02</div>
-        <h3>It knows when its own answer was cut short.</h3>
-        <p>A chat window leaves you to notice the incomplete text. Kestrel reads the model's real stop signal, so it knows a draft was cut off rather than finished.</p>
-        <p>Reasoning shares the same output budget as the answer, so a demanding question can run out of room mid-draft — Kestrel detects it and automatically retries once, telling the model to reason less and write directly.</p>
-      </div>
-      <div class="compare-col why-card violet">
-        <div class="why-num">03</div>
-        <h3>Every citation is checked before you see it, not just found.</h3>
-        <p>Kestrel researches a buyer's published policies with live web search, then checks every citation with a real request before it's used — anything that doesn't resolve is dropped. In our own testing, genuine policies came back with links that had since moved or 404'd.</p>
-        <p>Nothing in a chat window re-checks that a cited source is still live.</p>
-      </div>
+    <div class="stat-callout reveal statement-block">
+      <div class="stat-label">Methodology</div>
+      <h3 class="stat-headline">Built on a real bid-writing methodology <span class="grad">— fused automatically with your evidence and this tender's exact rules.</span></h3>
+      <p>Our drafting process is based on a genuine UK highways bid-writing methodology — extraction, buyer research, evidence-based drafting, self-scoring, compliance review — tested against real tender documents, not a generic "write me a proposal" prompt.</p>
+      <p>But a methodology alone can be copy-pasted into any chat. What can't be replicated is what it's fused with, automatically, every time: the exact word limit and evaluation weighting extracted from this specific tender document, and your company's own confirmed facts, remembered permanently from every past bid. In a raw chat, you'd have to manually re-paste your entire methodology, your company's evidence, and this tender's specific rules correctly, every single question, every single time — with real risk of missing something. Ours never forgets, and never has to be told twice.</p>
     </div>
   </div>
 </section>
